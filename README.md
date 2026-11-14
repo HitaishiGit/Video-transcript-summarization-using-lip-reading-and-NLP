@@ -1,40 +1,3 @@
-# Video Transcript Summarization Using Lip Reading and NLP
-
-## Project Overview
-
-This project explores an audiovisual pipeline for speech transcription
-and text summarization using the GRID audiovisual corpus. It combines:
-
-1.  **Lip-reading:** A CNN-LSTM model processes sequences of
-    mouth-region images and predicts words.
-2.  **Audio transcription:** OpenAI Whisper (`tiny.en`) generates
-    transcripts from extracted audio.
-3.  **Evaluation:** Lip-reading predictions are compared with reference
-    transcripts, while Whisper is evaluated using Word Error Rate (WER).
-4.  **Summarization:** FLAN-T5-small generates short summaries from
-    Whisper transcripts.
-
-> **Implementation scope:** The current implementation covers
-> lip-reading, audio transcription, transcript evaluation, and
-> summarization. Overlapping speech detection, speaker diarization, and
-> speech separation have **not** been implemented or evaluated. They are
-> proposed as future work.
-
-## Dataset
-
-The project uses the **GRID audiovisual corpus**. The experiments
-described in this repository used recordings from speaker `s1`, with
-corresponding video (`.mpg`) and alignment (`.align`) files.
-
-The alignment files provide word-level timing and reference words used
-to prepare the lip-reading sequences and evaluate transcripts.
-
-Dataset files are not included in this repository. Obtain the GRID
-corpus through its official distribution terms and follow its license
-and usage restrictions.
-
-## Methodology
-
 ### 1. Data preprocessing
 
 -   Match video files with their corresponding alignment files.
@@ -90,30 +53,6 @@ WER is an error rate, not ordinary accuracy. It can exceed 100%. The
 value `1 − WER` should not be described as standard transcription
 accuracy.
 
-## Repository Structure
-
-A suggested repository layout is:
-
-``` text
-video-transcript-summarization/
-├── README.md
-├── notebooks/
-│   ├── 01_data_preprocessing.ipynb
-│   ├── 02_lipreading_model.ipynb
-│   ├── 03_audio_transcription.ipynb
-│   └── 04_evaluation_and_summarization.ipynb
-├── results/
-│   ├── final_evaluation.csv
-│   ├── lipreading_evaluation.csv
-│   ├── wer_comparison.png
-│   └── confusion_matrix.png
-└── .gitignore
-```
-
-Adjust the notebook and result filenames to match the files actually
-added to the repository. Do not upload the GRID dataset, large extracted
-frame folders, audio files, or model checkpoints unless you have a clear
-reason and permission to distribute them.
 
 ## Requirements
 
@@ -130,24 +69,6 @@ The notebooks were developed in Google Colab. Main libraries include:
 -   jiwer
 -   Matplotlib
 
-Install the packages in a Colab notebook as needed. Package versions may
-need adjustment to match the runtime environment.
-
-## How to Run
-
-1.  Open the notebooks in Google Colab.
-2.  Mount Google Drive and set the paths to your GRID dataset.
-3.  Run preprocessing to create the mouth-region sequences and
-    alignment-based labels.
-4.  Train or load the saved CNN-LSTM model.
-5.  Generate lip-reading predictions for the test set.
-6.  Extract test audio and run Whisper transcription.
-7.  Calculate WER and generate evaluation plots.
-8.  Generate summaries with FLAN-T5-small.
-
-The notebooks depend on the dataset and intermediate files created in
-earlier stages. Update paths before running them in a different
-environment.
 
 ## Limitations
 
@@ -175,16 +96,3 @@ environment.
 -   Implement and evaluate overlap detection, speaker diarization, and
     speech separation using appropriate reference recordings and
     metrics.
-
-## Acknowledgements
-
-This project uses the GRID audiovisual corpus and open-source
-machine-learning and NLP libraries. Please acknowledge the dataset
-creators and follow the dataset's terms when using or redistributing it.
-
-## Disclaimer
-
-This is an academic experimental project. Reported metrics apply only to
-the described experimental run and dataset split. They are not
-guarantees of performance on other speakers, datasets, or real-world
-conversations.
